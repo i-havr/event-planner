@@ -13,12 +13,14 @@ export const theme = {
     accent: '#6243FF',
     muted: '#ACA7C3',
 
+    placeholder: '#888888',
+
     green: '#6BD475',
     orange: '#E2A300',
     red: '#FF2B77',
   },
 
-  space: [0, 2, 4, 8, 16, 32, 64, 128, 256],
+  space: [0, 2, 4, 8, 16, 24, 32, 64, 128, 256],
 
   fonts: {
     body: 'system-ui, sans-serif',
@@ -29,8 +31,8 @@ export const theme = {
     xs: 12,
     s: 14,
     m: 16,
-    l: 32,
-    xl: 64,
+    l: 24,
+    xl: 32,
   },
 
   fontWeights: {
@@ -41,7 +43,7 @@ export const theme = {
   lineHeights: {
     body: 1.43,
     secondary: 1.5,
-    heading: 1.125,
+    logo: 1.38,
   },
 
   borders: {
@@ -53,8 +55,13 @@ export const theme = {
     none: '0',
     normal: '4px',
     button: '8px',
+    form: '8px',
     input: '10px',
     card: '12px',
     round: '50%',
+  },
+
+  shadows: {
+    normal: '2px 4px 9px 0px rgba(166, 141, 174, 0.28)',
   },
 };
