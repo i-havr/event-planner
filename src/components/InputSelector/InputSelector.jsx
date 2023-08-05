@@ -1,60 +1,97 @@
-import { useState, useEffect, useRef } from 'react';
-import { languagesList } from '../../assets';
-import { HiOutlineChevronDown } from 'react-icons/hi';
-import * as SC from './LanguageSelector.styled';
+import PropTypes from 'prop-types';
 
-export const LanguageSelector = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState('EN');
+import { useState, useEffect, useRef } from 'react';
+import {
+  categoryTypes,
+  priorityLevels,
+  sortMethods,
+} from '../../assets/constants';
+import { HiOutlineChevronDown } from 'react-icons/hi';
+import * as SC from './InputSelector.styled';
+
+export const InputSelector = ({
+  optionsName,
+  name,
+  value,
+  placeholder,
+  required,
+}) => {
+  const [selectedOption, setSelectedOption] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const languageSelectorRef = useRef(null);
+  const [listType, setListType] = useState(null);
+  const optionSelectorRef = useRef(null);
+
+  const handleCheckOptionList = options => {
+    switch (options) {
+      case 'priorityLevels':
+        setListType(priorityLevels.list);
+        break;
+
+      case 'categoryTypes':
+        setListType(categoryTypes.list);
+        break;
+
+      case 'sortMethods':
+        setListType(sortMethods.list);
+        break;
+
+      default:
+        return;
+    }
+  };
 
   const handleMenuToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLanguageSelect = language => {
-    setSelectedLanguage(language);
+  const handleOptionSelect = option => {
+    setSelectedOption(option);
     setIsOpen(false);
   };
 
   const handleBackdropClick = event => {
     if (
-      languageSelectorRef.current &&
-      !languageSelectorRef.current.contains(event.target)
+      optionSelectorRef.current &&
+      !optionSelectorRef.current.contains(event.target)
     ) {
       setIsOpen(false);
     }
   };
 
   useEffect(() => {
+    handleCheckOptionList(optionsName);
     document.addEventListener('click', handleBackdropClick);
     return () => {
       document.removeEventListener('click', handleBackdropClick);
     };
-  }, []);
+  }, [optionsName]);
 
   return (
-    <SC.LanguageSelector ref={languageSelectorRef}>
-      <SC.Button onClick={handleMenuToggle}>
-        {selectedLanguage}
+    <SC.InputSelector ref={optionSelectorRef}>
+      <SC.Input type="text" name={name} onFocus={handleMenuToggle} />
+      {/* {selectedOption}
         <HiOutlineChevronDown
           style={isOpen && { transform: 'rotate(180deg)' }}
           size={18}
         />
-      </SC.Button>
+      </SC.Input> */}
 
       {isOpen && (
-        <SC.LanguageMenu>
-          {languagesList.map((language, index) => (
-            <SC.Language
-              key={index}
-              onClick={() => handleLanguageSelect(language)}
-            >
-              {language}
-            </SC.Language>
+        <SC.Menu>
+          {listType.map((option, index) => (
+            <SC.Option key={index} onClick={() => handleOptionSelect(option)}>
+              {option}
+            </SC.Option>
           ))}
-        </SC.LanguageMenu>
+        </SC.Menu>
       )}
-    </SC.LanguageSelector>
+    </SC.InputSelector>
   );
+};
+
+InputSelector.propTypes = {
+  optionsName: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    list: PropTypes.arrayOf(PropTypes.string.isRequired),
+  }),
 };

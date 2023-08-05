@@ -24,6 +24,14 @@ export const Button = styled.button`
   transition: background-color 300ms ease-out;
   cursor: pointer;
 
+  &:disabled {
+    background-color: ${p => p.theme.colors.muted};
+    &:hover {
+      background-color: ${p => p.theme.colors.muted};
+      cursor: default;
+    }
+  }
+
   &:hover {
     background-color: ${p => p.theme.colors.accent};
   }

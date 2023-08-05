@@ -8,7 +8,7 @@ export const EventCard = styled.li`
   overflow: hidden;
   background-color: ${p => p.theme.colors.background};
   box-shadow: ${p => p.theme.shadows.normal};
-  cursor: pointer;
+  /* cursor: pointer; */
 
   &:hover div:nth-child(2) {
     bottom: 0;

@@ -4,7 +4,7 @@ import * as SC from './BackButton.styled';
 export const BackButton = ({ children, ...allyProps }) => {
   return (
     <SC.BackButton type="submit" {...allyProps}>
-      {children}{' '}
+      {children}
     </SC.BackButton>
   );
 };

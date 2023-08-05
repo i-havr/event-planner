@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-export const LanguageSelector = styled.div`
+export const InputSelector = styled.div`
   position: relative;
   width: 69px;
   font-family: 'Poppins-Medium';
 `;
 
-export const Button = styled.button`
+export const Input = styled.input`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,7 +30,7 @@ export const Button = styled.button`
   }
 `;
 
-export const LanguageMenu = styled.ul`
+export const Menu = styled.ul`
   position: absolute;
   top: 50px;
   width: inherit;
@@ -41,7 +41,7 @@ export const LanguageMenu = styled.ul`
   z-index: 10;
 `;
 
-export const Language = styled.li`
+export const Option = styled.li`
   padding: 2px 0;
   line-height: 1.25;
   color: ${p => p.theme.colors.muted};

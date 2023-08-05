@@ -25,6 +25,16 @@
   src: url('./assets/fonts/Alata-Regular.ttf');
 }
 
+@font-face {
+  font-family: Inter-Regular;
+  src: url('./assets/fonts/Inter-Regular.ttf');
+}
+
+@font-face {
+  font-family: Inter-SemiBold;
+  src: url('./assets/fonts/Inter-SemiBold.ttf');
+}
+
 *,
 *::before,
 *::after {

@@ -13,14 +13,14 @@ export const Section = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 42px 24px 0 24px;
+  padding: 42px 24px 136px 24px;
 
   @media screen and (min-width: 768px) {
-    padding: 40px 40px 0 40px;
+    padding: 40px 40px 308px 40px;
   }
 
   @media screen and (min-width: 1280px) {
-    padding: 60px 80px 0px 80px;
+    padding: 60px 80px 298px 80px;
   }
 `;
 

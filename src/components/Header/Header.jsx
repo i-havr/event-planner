@@ -1,6 +1,8 @@
-import { LanguageSelector } from '../LanguageSelector';
+// import { LanguageSelector } from '../LanguageSelector';
+import { OptionsSelector } from '../OptionsSelector';
 import { SearchInput } from '../SearchInput';
 import { useWindowWidth } from '../../hooks';
+import { languagesList } from '../../assets';
 import * as SC from './Header.styled';
 
 export const Header = () => {
@@ -11,7 +13,7 @@ export const Header = () => {
         <>
           <SC.ContentWrapper>
             <SC.Logo>Event Planner</SC.Logo>
-            <LanguageSelector />
+            <OptionsSelector options={languagesList} selectorView="languages" />
           </SC.ContentWrapper>
           <SearchInput />
         </>
@@ -20,7 +22,7 @@ export const Header = () => {
           <SC.Logo>Event Planner</SC.Logo>
           <SC.ContentWrapper>
             <SearchInput />
-            <LanguageSelector />
+            <OptionsSelector options={languagesList} selectorView="languages" />
           </SC.ContentWrapper>
         </>
       )}

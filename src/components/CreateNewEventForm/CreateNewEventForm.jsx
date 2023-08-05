@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { uploadEventToServer } from '../../services';
+import { OptionsSelector } from '../OptionsSelector';
 import { Button } from '../Button';
+import { TimePicker } from '../TimePicker';
+import { categoryTypes, priorityLevels } from '../../assets';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import { ReactComponent as CrossIcon } from '../../assets/icons/cross-icon.svg';
 import * as SC from './CreateNewEventForm.styled';
@@ -14,6 +17,20 @@ export const CreateNewEventForm = () => {
   const [category, setCategory] = useState('');
   const [pictureUri, setPictureUri] = useState('');
   const [priority, setPriority] = useState('');
+  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+  const [isTimePickerOpen, setTimePickerOpen] = useState(false);
+
+  const datePickerRef = useRef(null);
+  const timePickerLabelRef = useRef(null);
+  const timePickerRef = useRef(null);
+
+  useEffect(() => {
+    console.log(isTimePickerOpen);
+
+    if (datePickerRef.current) {
+      datePickerRef.current.setOpen(isDatePickerOpen);
+    }
+  }, [isDatePickerOpen, isTimePickerOpen]);
 
   const handleFileInputChange = event => {
     const file = event.target.files[0];
@@ -40,10 +57,6 @@ export const CreateNewEventForm = () => {
         setDescription(value);
         break;
 
-      case 'date':
-        setDate(value);
-        break;
-
       case 'time':
         setTime(value);
         break;
@@ -68,8 +81,6 @@ export const CreateNewEventForm = () => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    console.log('click handleSubmit');
-
     uploadEventToServer(
       title,
       description,
@@ -80,6 +91,38 @@ export const CreateNewEventForm = () => {
       pictureUri,
       priority
     );
+  };
+
+  const handleCalendarClose = event => {
+    if (event.target.textContent === 'Cancel') {
+      setDate('');
+    }
+
+    if (datePickerRef.current) {
+      setDatePickerOpen(false);
+    }
+  };
+
+  const handleBackdropClick = event => {
+    if (
+      timePickerLabelRef.current &&
+      !timePickerLabelRef.current.contains(event.target)
+    ) {
+      setTimePickerOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleBackdropClick);
+    return () => {
+      document.removeEventListener('click', handleBackdropClick);
+    };
+  }, []);
+
+  const handleTimePickerToggle = () => {
+    if (timePickerLabelRef.current) {
+      setTimePickerOpen(true);
+    }
   };
 
   return (
@@ -93,7 +136,6 @@ export const CreateNewEventForm = () => {
           onChange={handleInputChange}
           placeholder="Input"
           pattern="^[a-zA-Zа-яА-Я0-9]+(?:[ ,-](?:[a-zA-Zа-яА-Я0-9]+['’]?[a-zA-Zа-яА-Я0-9]*)*)*$"
-          required
         />
         {title && (
           <CrossIcon
@@ -113,7 +155,6 @@ export const CreateNewEventForm = () => {
           onChange={handleInputChange}
           placeholder="Input"
           pattern="^[a-zA-Zа-яА-Я0-9]+(?:[ ,-](?:[a-zA-Zа-яА-Я0-9]+['’]?[a-zA-Zа-яА-Я0-9]*)*)*$"
-          required
         />
         {description && (
           <CrossIcon
@@ -123,20 +164,50 @@ export const CreateNewEventForm = () => {
         )}
       </SC.Label>
 
-      <SC.Label>
+      <SC.LabelDateTime>
         <SC.LabelTitle>Select date</SC.LabelTitle>
-        <SC.Input
-          type="text"
-          name="date"
-          value={date}
-          onChange={handleInputChange}
-          placeholder="Input"
-          pattern="^[a-zA-Zа-яА-Я0-9]+(?:[ ,-](?:[a-zA-Zа-яА-Я0-9]+['’]?[a-zA-Zа-яА-Я0-9]*)*)*$"
-          required
+        <SC.DatePickerWrapper>
+          <SC.DatePick
+            ref={datePickerRef}
+            type="text"
+            name="date"
+            selected={date}
+            dateFormat="dd/MM/yyyy"
+            placeholderText={!isDatePickerOpen ? 'Input' : 'Select Date'}
+            input={true}
+            onChange={date => setDate(new Date(date))}
+            onCalendarClose={() => setDatePickerOpen(false)}
+            onCalendarOpen={() => setDatePickerOpen(true)}
+          >
+            <SC.ButtonsGroup>
+              <Button type="button" actionHandler={handleCalendarClose}>
+                Cancel
+              </Button>
+              <Button
+                disabled={date ? false : true}
+                type="button"
+                actionHandler={handleCalendarClose}
+              >
+                Choose date
+              </Button>
+            </SC.ButtonsGroup>
+          </SC.DatePick>
+        </SC.DatePickerWrapper>
+        <HiOutlineChevronDown
+          size={18}
+          style={
+            isDatePickerOpen && {
+              transform: 'rotate(180deg)',
+              color: '#7B61FF',
+            }
+          }
         />
-      </SC.Label>
+      </SC.LabelDateTime>
 
-      <SC.Label>
+      <SC.LabelDateTime
+        ref={timePickerLabelRef}
+        onClick={handleTimePickerToggle}
+      >
         <SC.LabelTitle>Select time</SC.LabelTitle>
         <SC.Input
           type="text"
@@ -144,10 +215,24 @@ export const CreateNewEventForm = () => {
           value={time}
           onChange={handleInputChange}
           placeholder="Input"
+          readOnly
           pattern="^[a-zA-Zа-яА-Я0-9]+(?:[ ,-](?:[a-zA-Zа-яА-Я0-9]+['’]?[a-zA-Zа-яА-Я0-9]*)*)*$"
-          required
         />
-      </SC.Label>
+        <HiOutlineChevronDown
+          size={18}
+          style={
+            isTimePickerOpen && {
+              transform: 'rotate(180deg)',
+              color: '#7B61FF',
+            }
+          }
+        />
+        <TimePicker
+          reference={timePickerRef}
+          setTime={setTime}
+          isTimePickerOpen={isTimePickerOpen}
+        />
+      </SC.LabelDateTime>
 
       <SC.Label>
         <SC.LabelTitle>Location</SC.LabelTitle>
@@ -158,7 +243,6 @@ export const CreateNewEventForm = () => {
           onChange={handleInputChange}
           placeholder="Input"
           pattern="^[a-zA-Zа-яА-Я0-9]+(?:[ ,-](?:[a-zA-Zа-яА-Я0-9]+['’]?[a-zA-Zа-яА-Я0-9]*)*)*$"
-          required
         />
         {location && (
           <CrossIcon
@@ -168,18 +252,11 @@ export const CreateNewEventForm = () => {
         )}
       </SC.Label>
 
-      <SC.Label>
-        <SC.LabelTitle>Category</SC.LabelTitle>
-        <SC.Input
-          type="text"
-          name="category"
-          value={category}
-          onChange={handleInputChange}
-          placeholder="Input"
-          pattern="^[a-zA-Zа-яА-Я0-9]+(?:[ ,-](?:[a-zA-Zа-яА-Я0-9]+['’]?[a-zA-Zа-яА-Я0-9]*)*)*$"
-          required
-        />
-      </SC.Label>
+      <OptionsSelector
+        options={categoryTypes}
+        title="Category"
+        setOption={setCategory}
+      />
 
       <SC.InputFileWrapper>
         <SC.LabelTitle>Add picture</SC.LabelTitle>
@@ -190,28 +267,21 @@ export const CreateNewEventForm = () => {
             onChange={handleFileInputChange}
             placeholder="Input"
             accept="image/*,.png,.jpg,.jpeg,.webp"
-            required
             style={{ display: 'none' }}
           />
           <SC.InputFilePlaceholder style={{ color: pictureUri && '#6BD475' }}>
-            {pictureUri ? 'The file has been chosen' : 'Input'}
+            {pictureUri ? 'File has been chosen' : 'Select'}
           </SC.InputFilePlaceholder>
         </SC.LabelFile>
         {pictureUri && <CrossIcon onClick={() => setPictureUri('')} />}
       </SC.InputFileWrapper>
 
-      <SC.Label style={{ marginBottom: '40px' }}>
-        <SC.LabelTitle>Priority</SC.LabelTitle>
-        <SC.Input
-          type="text"
-          name="priority"
-          value={priority}
-          onChange={handleInputChange}
-          placeholder="Input"
-          pattern="^[a-zA-Zа-яА-Я0-9]+(?:[ ,-](?:[a-zA-Zа-яА-Я0-9]+['’]?[a-zA-Zа-яА-Я0-9]*)*)*$"
-          required
-        />
-      </SC.Label>
+      <OptionsSelector
+        options={priorityLevels}
+        title="Priority"
+        setOption={setPriority}
+      />
+
       <Button actionHandler={handleSubmit}>Add event</Button>
     </SC.Form>
   );
