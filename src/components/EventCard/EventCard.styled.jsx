@@ -61,6 +61,7 @@ export const DateWrapper = styled.div`
 `;
 
 export const Date = styled.span``;
+export const Time = styled.span``;
 
 export const Location = styled.span``;
 
@@ -81,7 +82,7 @@ export const DescriptionWrapper = styled.div`
 export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: end;
   width: 100%;
   max-height: 100%;
   padding-top: ${p => p.theme.space[3]}px;
@@ -100,7 +101,7 @@ export const Description = styled.p`
   height: 88px;
   padding: ${p => p.theme.space[3]}px 0 ${p => p.theme.space[4]}px 0;
   font-family: 'Poppins-Regular';
-  font-size: ${p => p.theme.fontSizes.m}px;
+  font-size: ${p => p.theme.fontSizes.s}px;
   line-height: ${p => p.theme.lineHeights.body};
   color: ${p => p.theme.colors.secondaryText};
 `;

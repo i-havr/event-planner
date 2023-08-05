@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { formatDate, formatTime, capitalizeFirstLetter } from '../../helpers';
 import { Button } from '../Button';
 
 import * as SC from './EventCard.styled';
@@ -25,16 +27,21 @@ export const EventCard = ({ event, onFollowButton, isFollowed }) => {
         </SC.PictureWrapper>
         <SC.InfoWrapper>
           <SC.DateWrapper>
-            <SC.Date>{date}</SC.Date>
-            <SC.Location>{location}</SC.Location>
+            <div>
+              <SC.Date>{formatDate(date)}</SC.Date>
+              {' at '}
+              <SC.Time>{formatTime(time)}</SC.Time>
+            </div>
+
+            <SC.Location>{capitalizeFirstLetter(location)}</SC.Location>
           </SC.DateWrapper>
           <SC.DescriptionWrapper>
             <SC.Title>{title}</SC.Title>
             <SC.Description>{description}</SC.Description>
             <SC.ButtonWrapper>
-              <Button type="button" actionHandler={() => console.log(id)}>
-                More info
-              </Button>
+              <Link to={`/event/${id}`}>
+                <Button type="button">More info</Button>
+              </Link>
             </SC.ButtonWrapper>
           </SC.DescriptionWrapper>
         </SC.InfoWrapper>
@@ -48,6 +55,7 @@ EventCard.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
     time: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,

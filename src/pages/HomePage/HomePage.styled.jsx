@@ -13,6 +13,7 @@ export const Section = styled.section`
   display: flex;
   flex-direction: column;
   max-width: 1600px;
+  min-height: 100vh;
   padding: 40px 24px 42px 24px;
 
   @media screen and (min-width: 768px) {

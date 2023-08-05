@@ -29,7 +29,7 @@ export const EventsList = () => {
             const sortedData = data.docs
               .map(doc => ({ id: doc.id, ...doc.data() }))
               .sort((a, b) => b.createdAt - a.createdAt);
-            console.log(sortedData);
+            // console.log(sortedData);
             dispatch(fetchEvents(sortedData));
           },
           () => {}
@@ -62,9 +62,8 @@ export const EventsList = () => {
             <EventCard
               key={event.id}
               event={event}
-              //   id={id}
-              onEditButton={id => dispatch(setModal(id))}
-              onDeleteButton={id => dispatch(deleteContact(id))}
+              // onEditButton={id => dispatch(setModal(id))}
+              // onDeleteButton={id => dispatch(deleteContact(id))}
             />
           );
         })}

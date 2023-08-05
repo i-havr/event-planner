@@ -308,6 +308,7 @@ export const ButtonsGroup = styled.div`
   justify-content: space-between;
 
   & > button {
+    width: auto;
     height: 32px;
     margin: 0;
     padding: ${p => p.theme.space[3]}px 14px;

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { uploadEventToServer } from '../../services';
+import { dateConverter } from '../../helpers';
 import { OptionsSelector } from '../OptionsSelector';
 import { Button } from '../Button';
 import { TimePicker } from '../TimePicker';
@@ -25,12 +26,26 @@ export const CreateNewEventForm = () => {
   const timePickerRef = useRef(null);
 
   useEffect(() => {
-    console.log(isTimePickerOpen);
-
     if (datePickerRef.current) {
       datePickerRef.current.setOpen(isDatePickerOpen);
     }
   }, [isDatePickerOpen, isTimePickerOpen]);
+
+  const handleBackdropClick = event => {
+    if (
+      timePickerLabelRef.current &&
+      !timePickerLabelRef.current.contains(event.target)
+    ) {
+      setTimePickerOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleBackdropClick);
+    return () => {
+      document.removeEventListener('click', handleBackdropClick);
+    };
+  }, []);
 
   const handleFileInputChange = event => {
     const file = event.target.files[0];
@@ -57,20 +72,8 @@ export const CreateNewEventForm = () => {
         setDescription(value);
         break;
 
-      case 'time':
-        setTime(value);
-        break;
-
       case 'location':
         setLocation(value);
-        break;
-
-      case 'category':
-        setCategory(value);
-        break;
-
-      case 'priority':
-        setPriority(value);
         break;
 
       default:
@@ -84,7 +87,7 @@ export const CreateNewEventForm = () => {
     uploadEventToServer(
       title,
       description,
-      date,
+      dateConverter(date),
       time,
       location,
       category,
@@ -102,22 +105,6 @@ export const CreateNewEventForm = () => {
       setDatePickerOpen(false);
     }
   };
-
-  const handleBackdropClick = event => {
-    if (
-      timePickerLabelRef.current &&
-      !timePickerLabelRef.current.contains(event.target)
-    ) {
-      setTimePickerOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('click', handleBackdropClick);
-    return () => {
-      document.removeEventListener('click', handleBackdropClick);
-    };
-  }, []);
 
   const handleTimePickerToggle = () => {
     if (timePickerLabelRef.current) {
@@ -175,7 +162,7 @@ export const CreateNewEventForm = () => {
             dateFormat="dd/MM/yyyy"
             placeholderText={!isDatePickerOpen ? 'Input' : 'Select Date'}
             input={true}
-            onChange={date => setDate(new Date(date))}
+            onChange={date => setDate(date)}
             onCalendarClose={() => setDatePickerOpen(false)}
             onCalendarOpen={() => setDatePickerOpen(true)}
           >

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useWindowWidth } from '../../hooks';
 import { OptionsButton } from '../OptionsButton';
 import { ReactComponent as FilterIcon } from '../../assets/icons/filter-icon.svg';
@@ -13,14 +14,17 @@ export const OptionsPanel = () => {
         {!isScreenMobile && 'Business'}
         <FilterIcon />
       </OptionsButton>
+
       <OptionsButton view="option" aria-label="Sort">
         {!isScreenMobile && 'Sort by'}
         <SortIcon />
       </OptionsButton>
-      <OptionsButton aria-label="Add new event">
-        <AddIcon />
-        {!isScreenMobile && 'Add new event'}
-      </OptionsButton>
+      <Link to="/create">
+        <OptionsButton aria-label="Add new event">
+          <AddIcon />
+          {!isScreenMobile && 'Add new event'}
+        </OptionsButton>
+      </Link>
     </SC.Wrapper>
   );
 };
