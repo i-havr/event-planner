@@ -1,4 +1,4 @@
-import{s as n,e as s,j as t,L as a,H as r}from"./index-6a10bcbf.js";import{S as c,C as m}from"./Button-f5c1b6e4.js";import{B as d}from"./eventsService-cbc46821.js";import{C as l}from"./CreateNewEventForm-c2fd9c17.js";const p=n.main`
+import{s as n,j as t,L as i,H as s}from"./index-9cf2a618.js";import{S as o,C as r}from"./Button-64c261b6.js";import{B as a}from"./eventsService-078e2c32.js";import{E as c}from"./EventForm-41e033b4.js";const m=n.main`
   display: block;
   min-height: 100vh;
   background-image: url('/src/assets/images/bg-waves.png');
@@ -14,7 +14,7 @@ import{s as n,e as s,j as t,L as a,H as r}from"./index-6a10bcbf.js";import{S as 
     justify-content: space-between;
     align-items: center;
   }
-`;const h=n.h2`
+`;const d=n.h2`
   margin-bottom: ${e=>e.theme.space[5]}px;
   font-family: 'Poppins-SemiBold';
   font-size: ${e=>e.theme.fontSizes.l}px;
@@ -29,4 +29,4 @@ import{s as n,e as s,j as t,L as a,H as r}from"./index-6a10bcbf.js";import{S as 
     min-width: fit-content;
     margin-bottom: 25px;
   }
-`;function b(){var i;const o=((i=s().state)==null?void 0:i.from)??"/";return t.jsx(p,{children:t.jsx(c,{children:t.jsxs(m,{children:[t.jsx(a,{to:o,children:t.jsxs(d,{"aria-label":"Back button",children:[t.jsx(r,{size:16}),"Back"]})}),t.jsx(h,{children:"Create new event"}),t.jsx(l,{})]})})})}export{b as default};
+`;function f(){return t.jsx(m,{children:t.jsx(o,{children:t.jsxs(r,{children:[t.jsx(i,{to:"/",children:t.jsxs(a,{"aria-label":"Back button",children:[t.jsx(s,{size:16}),"Back"]})}),t.jsx(d,{children:"Create new event"}),t.jsx(c,{})]})})})}export{f as default};
