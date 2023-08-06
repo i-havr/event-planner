@@ -13,15 +13,13 @@ import './index.css';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <PersistGate loading={null} persistor={persistor}> */}
-      <HashRouter>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </HashRouter>
-      {/* </PersistGate> */}
+      <PersistGate loading={null} persistor={persistor}>
+        <HashRouter>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </HashRouter>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
-
-//persist пізніше можна використати, щоб запам'ятовувати обрану мову

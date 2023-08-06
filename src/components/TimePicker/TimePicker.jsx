@@ -5,11 +5,15 @@ import { useKeenSlider } from 'keen-slider/react';
 import * as SC from './TimePicker.styled';
 import 'keen-slider/keen-slider.min.css';
 
-export const TimePicker = ({ setTime, reference, isTimePickerOpen }) => {
+export const TimePicker = ({
+  reference,
+  setTime,
+  isTimePickerOpen,
+  setIsFirstEdit,
+}) => {
   const [hour, setHour] = useState(1);
   const [minute, setMinute] = useState(0);
   const [amPm, setAmPm] = useState('AM');
-  const [isFirstEdit, setIsFirstEdit] = useState(true);
 
   const [selectedHourIndex, setSelectedHourIndex] = useState(0);
   const [selectedMinuteIndex, setSelectedMinuteIndex] = useState(0);
@@ -20,17 +24,14 @@ export const TimePicker = ({ setTime, reference, isTimePickerOpen }) => {
   const amPmValues = ['AM', 'PM'];
 
   useEffect(() => {
-    if (isFirstEdit) {
-      setTime('');
-    }
-
     if (!hour || minute === undefined || !amPm) {
       return;
     }
+
     setTime(
       `${hour}:${minute < 10 ? `0${minute}` : minute} ${amPm.toLowerCase()}`
     );
-  }, [amPm, hour, isFirstEdit, minute, setTime]);
+  }, [amPm, hour, minute, setTime]);
 
   const [hourSliderRef] = useKeenSlider({
     loop: true,
@@ -98,48 +99,50 @@ export const TimePicker = ({ setTime, reference, isTimePickerOpen }) => {
   if (isTimePickerOpen) {
     return (
       <SC.TimePickerWrapper ref={reference}>
-        <div id="keen-slider" className="keen-slider" ref={hourSliderRef}>
-          {hourValues.map((value, idx) => (
-            <div
-              key={value}
-              className={`keen-slider__slide number-slide-hour${value} ${
-                idx === selectedHourIndex ? 'selected' : ''
-              }`}
-            >
-              {value}
-            </div>
-          ))}
-        </div>
+        <SC.SlidersWrapper>
+          <div id="keen-slider" className="keen-slider" ref={hourSliderRef}>
+            {hourValues.map((value, idx) => (
+              <div
+                key={value}
+                className={`keen-slider__slide number-slide-hour${value} ${
+                  idx === selectedHourIndex ? 'selected' : ''
+                }`}
+              >
+                {value}
+              </div>
+            ))}
+          </div>
 
-        <div id="keen-slider" className="keen-slider " ref={minuteSliderRef}>
-          {minuteValues.map((value, idx) => (
-            <div
-              key={value}
-              className={`keen-slider__slide number-slide-minute${value} ${
-                idx === selectedMinuteIndex ? 'selected' : ''
-              }`}
-            >
-              {value < 10 ? `0${value}` : value}
-            </div>
-          ))}
-        </div>
+          <div id="keen-slider" className="keen-slider " ref={minuteSliderRef}>
+            {minuteValues.map((value, idx) => (
+              <div
+                key={value}
+                className={`keen-slider__slide number-slide-minute${value} ${
+                  idx === selectedMinuteIndex ? 'selected' : ''
+                }`}
+              >
+                {value < 10 ? `0${value}` : value}
+              </div>
+            ))}
+          </div>
 
-        <div
-          id="keen-slider"
-          className="keen-slider keen-slider_am-pm"
-          ref={amPmSliderRef}
-        >
-          {amPmValues.map((value, idx) => (
-            <div
-              key={idx}
-              className={`keen-slider__slide number-slide-${value.toLowerCase()} ${
-                idx === selectedAmPmIndex ? 'selected' : ''
-              }`}
-            >
-              {value}
-            </div>
-          ))}
-        </div>
+          <div
+            id="keen-slider"
+            className="keen-slider keen-slider_am-pm"
+            ref={amPmSliderRef}
+          >
+            {amPmValues.map((value, idx) => (
+              <div
+                key={idx}
+                className={`keen-slider__slide number-slide-${value.toLowerCase()} ${
+                  idx === selectedAmPmIndex ? 'selected' : ''
+                }`}
+              >
+                {value}
+              </div>
+            ))}
+          </div>
+        </SC.SlidersWrapper>
       </SC.TimePickerWrapper>
     );
   }
@@ -149,4 +152,5 @@ TimePicker.propTypes = {
   setTime: PropTypes.func.isRequired,
   reference: PropTypes.object,
   isTimePickerOpen: PropTypes.bool.isRequired,
+  setIsFirstEdit: PropTypes.func.isRequired,
 };

@@ -1,27 +1,7 @@
 import { db } from '../firebase/config';
-import { doc, setDoc, Timestamp } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc } from 'firebase/firestore';
 
 import { uploadImageToServer } from './imagesService';
-
-// export const getCurrentUserComment = async (
-//   userId,
-//   postId,
-//   commentId,
-//   setIsCurrentUserComment
-// ) => {
-//   try {
-//     const commentRef = doc(db, 'posts', postId, 'comments', commentId);
-//     const commentSnap = await getDoc(commentRef);
-
-//     if (commentSnap.data().userId === userId) {
-//       setIsCurrentUserComment(true);
-//     } else {
-//       setIsCurrentUserComment(false);
-//     }
-//   } catch (error) {
-//     console.log('getCurrentUserComment', error);
-//   }
-// };
 
 export const uploadEventToServer = async (
   title,
@@ -51,7 +31,31 @@ export const uploadEventToServer = async (
       priority,
       createdAt: uniqueEventId,
     });
+
+    return true;
   } catch (error) {
     console.log('uploadEventToServer: ', error.message);
+  }
+};
+
+export const deleteEvent = async eventId => {
+  try {
+    const eventRef = await doc(db, 'events', eventId);
+    await deleteDoc(eventRef);
+
+    return true;
+  } catch (error) {
+    console.log('deleteEvent: ', error);
+  }
+};
+
+export const editEvent = async (eventId, newData) => {
+  try {
+    const eventRef = await doc(db, 'events', eventId);
+    await setDoc(eventRef, newData, { merge: true });
+
+    return true;
+  } catch (error) {
+    console.log('editEvent: ', error);
   }
 };

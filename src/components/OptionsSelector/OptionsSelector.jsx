@@ -5,6 +5,8 @@ import { HiOutlineChevronDown } from 'react-icons/hi';
 import * as SC from './OptionsSelector.styled';
 
 export const OptionsSelector = ({
+  editType,
+  prevValue,
   options,
   selectorView,
   title,
@@ -15,6 +17,7 @@ export const OptionsSelector = ({
   );
   const [isOpen, setIsOpen] = useState(false);
   const [listType] = useState(options.list);
+  const [isFirstEdit, setIsFirstEdit] = useState(true);
   const optionSelectorRef = useRef(null);
 
   const handleMenuToggle = () => {
@@ -23,8 +26,11 @@ export const OptionsSelector = ({
 
   const handleOptionSelect = option => {
     setSelectedOption(option);
-    setOption(option);
     setIsOpen(false);
+    if (selectorView !== 'languages') {
+      setOption(option);
+    }
+    setIsFirstEdit(false);
   };
 
   const handleBackdropClick = event => {
@@ -62,12 +68,15 @@ export const OptionsSelector = ({
       ) : (
         <>
           <SC.Title>{title}</SC.Title>
+
           <SC.ButtonOptions
             style={{ color: isOpen && '#7B61FF' }}
             type="button"
             onClick={handleMenuToggle}
           >
-            {!isOpen
+            {editType && isFirstEdit
+              ? prevValue
+              : !isOpen
               ? selectedOption
                 ? selectedOption
                 : 'Select'
@@ -110,6 +119,8 @@ OptionsSelector.propTypes = {
     name: PropTypes.string.isRequired,
     list: PropTypes.arrayOf(PropTypes.string.isRequired),
   }),
+  editType: PropTypes.bool,
+  prevValue: PropTypes.string,
   setOption: PropTypes.func,
   title: PropTypes.string,
   selectorView: PropTypes.string,

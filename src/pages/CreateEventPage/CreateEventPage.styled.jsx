@@ -9,23 +9,6 @@ export const CreateEventPage = styled.main`
   background-repeat: no-repeat;
 `;
 
-export const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 42px 24px 136px 24px;
-
-  @media screen and (min-width: 768px) {
-    padding: 40px 40px 308px 40px;
-  }
-
-  @media screen and (min-width: 1280px) {
-    padding: 60px 80px 298px 80px;
-  }
-`;
-
-// export const   = styled.div``
-
 export const OptionsWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -40,12 +23,16 @@ export const OptionsWrapper = styled.div`
 export const Title = styled.h2`
   margin-bottom: ${p => p.theme.space[5]}px;
   font-family: 'Poppins-SemiBold';
-  line-height: ${p => p.theme.lineHeights.secondary};
   font-size: ${p => p.theme.fontSizes.l}px;
+  line-height: ${p => p.theme.lineHeights.secondary};
   color: ${p => p.theme.colors.black};
+
+  @media screen and (min-width: 768px) {
+    font-size: ${p => p.theme.fontSizes.xl}px;
+  }
 
   @media screen and (min-width: 1280px) {
     min-width: fit-content;
-    margin-bottom: ${p => p.theme.space[0]}px;
+    margin-bottom: 25px;
   }
 `;

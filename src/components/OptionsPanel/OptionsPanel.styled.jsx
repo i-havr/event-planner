@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  display: flex;
+  display: inline-flex;
   justify-content: end;
   gap: ${p => p.theme.space[5]}px;
 

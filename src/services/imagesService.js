@@ -1,34 +1,10 @@
 import { myStorage } from '../firebase/config';
-import { updateProfile } from 'firebase/auth';
 import {
   ref,
   uploadBytes,
   getDownloadURL,
   deleteObject,
 } from 'firebase/storage';
-
-export const handleDeleteAvatar = async (
-  avatarUri,
-  setIsLoading,
-  setAvatarUri
-) => {
-  try {
-    setIsLoading(true);
-    if (avatarUri.startsWith('https')) {
-      await updateProfile(auth.currentUser, {
-        photoURL: '',
-      });
-
-      const avatarRef = ref(myStorage, avatarUri);
-      await deleteObject(avatarRef);
-    }
-    setAvatarUri(null);
-  } catch (error) {
-    console.log('handleDeleteAvatar: ', error);
-  } finally {
-    setIsLoading(false);
-  }
-};
 
 export const uploadImageToServer = async (imageUri, prefixFolder) => {
   const uniqueImageId = Date.now().toString();
@@ -49,5 +25,16 @@ export const uploadImageToServer = async (imageUri, prefixFolder) => {
     } catch (error) {
       console.log('uploadImageToServer: ', error);
     }
+  }
+};
+
+export const deleteImage = async imageUri => {
+  try {
+    const imageRef = ref(myStorage, imageUri);
+    await deleteObject(imageRef);
+
+    return true;
+  } catch (error) {
+    console.log('deletePicture: ', error);
   }
 };

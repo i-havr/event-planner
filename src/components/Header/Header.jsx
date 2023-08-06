@@ -1,4 +1,4 @@
-// import { LanguageSelector } from '../LanguageSelector';
+import { Link } from 'react-router-dom';
 import { OptionsSelector } from '../OptionsSelector';
 import { SearchInput } from '../SearchInput';
 import { useWindowWidth } from '../../hooks';
@@ -12,14 +12,18 @@ export const Header = () => {
       {isScreenMobile ? (
         <>
           <SC.ContentWrapper>
-            <SC.Logo>Event Planner</SC.Logo>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <SC.Logo>Event Planner</SC.Logo>
+            </Link>
             <OptionsSelector options={languagesList} selectorView="languages" />
           </SC.ContentWrapper>
           <SearchInput />
         </>
       ) : (
         <>
-          <SC.Logo>Event Planner</SC.Logo>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <SC.Logo>Event Planner</SC.Logo>
+          </Link>
           <SC.ContentWrapper>
             <SearchInput />
             <OptionsSelector options={languagesList} selectorView="languages" />

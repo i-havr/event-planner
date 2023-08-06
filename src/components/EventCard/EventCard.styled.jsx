@@ -35,7 +35,6 @@ export const PictureWrapper = styled.div`
 
 export const Picture = styled.img`
   min-height: 100%;
-  scale: 1;
   object-fit: cover;
 `;
 
@@ -104,4 +103,33 @@ export const Description = styled.p`
   font-size: ${p => p.theme.fontSizes.s}px;
   line-height: ${p => p.theme.lineHeights.body};
   color: ${p => p.theme.colors.secondaryText};
+`;
+
+export const CategoriesWrapper = styled.div`
+  position: absolute;
+  top: 12px;
+  left: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  z-index: 1;
+`;
+
+export const CategoryMarker = styled.span`
+  height: 32px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 6px 12px;
+  font-family: 'Poppins-Medium';
+  font-size: ${p => p.theme.fontSizes.s}px;
+  line-height: ${p => p.theme.lineHeights.body};
+  color: ${p => p.theme.colors.secondary};
+  background-color: ${p => p.theme.colors.background};
+  border-radius: ${p => p.theme.radii.form};
 `;

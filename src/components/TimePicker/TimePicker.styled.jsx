@@ -15,6 +15,14 @@ export const TimePickerWrapper = styled.div`
   overflow: hidden;
   z-index: 1;
 
+  @media screen and (min-width: 768px) {
+    width: 308px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 372px;
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -26,6 +34,14 @@ export const TimePickerWrapper = styled.div`
 
     border-top: 1px solid ${p => p.theme.colors.muted};
     border-bottom: 1px solid ${p => p.theme.colors.muted};
+
+    @media screen and (min-width: 768px) {
+      width: calc(308px - 32px);
+    }
+
+    @media screen and (min-width: 768px) {
+      width: calc(372px - 32px);
+    }
   }
 
   &::after {
@@ -37,10 +53,10 @@ export const TimePickerWrapper = styled.div`
     font-size: ${p => p.theme.fontSizes.m}px;
     line-height: ${p => p.theme.lineHeights.secondary};
     color: ${p => p.theme.colors.text};
-  }
 
-  & > #keen-slider {
-    width: calc(100% / 3 - 40px);
+    @media screen and (min-width: 768px) {
+      left: calc((240px - 12px) / 3);
+    }
   }
 
   & #keen-slider > [class*=' number-slide'].selected {
@@ -64,5 +80,22 @@ export const TimePickerWrapper = styled.div`
   & #keen-slider:has(.number-slide-minute1) {
     width: calc(240px / 3);
     margin-left: 24px;
+  }
+
+  & #keen-slider:has(.number-slide-pm) {
+  }
+
+  & #keen-slider .number-slide-am,
+  & #keen-slider .number-slide-pm {
+  }
+`;
+
+export const SlidersWrapper = styled.div`
+  display: flex;
+  justify-content: start;
+  width: 240px;
+
+  & > #keen-slider {
+    width: calc(100% / 3 - 40px);
   }
 `;

@@ -5,17 +5,30 @@ export const dateConverter = timestamp => {
 
   const month = date.getMonth();
 
-  const formatDateItem = date_item => {
+  const formatDateItem = (date_item, isMonth = false) => {
     if (date_item < 10) {
-      return `0${date_item}`;
+      return `0${isMonth ? date_item + 1 : date_item}`;
     }
-    return `${date_item}`;
+    return `${isMonth ? date_item + 1 : date_item}`;
   };
 
-  const formattedDay = formatDateItem(day);
+  const formatDay = day => {
+    if (day < 10) {
+      return `0${day}`;
+    }
+    return `${day}`;
+  };
 
-  const formatteMonth = formatDateItem(month);
+  const formatMonth = month => {
+    if (month + 1 < 10) {
+      return `0${month + 1}`;
+    }
+    return `${month + 1}`;
+  };
+
+  const formattedDay = formatDay(day);
+  const formattedMonth = formatMonth(month);
   const year = date.getFullYear();
 
-  return `${formattedDay}/${formatteMonth}/${year}`;
+  return `${formattedDay}/${formattedMonth}/${year}`;
 };

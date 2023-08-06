@@ -38,7 +38,7 @@ export const ButtonLanguages = styled.button`
 `;
 
 export const Title = styled.span`
-  margin-bottom: ${p => p.theme.space[3]}px;
+  display: block;
   font-family: 'Poppins-Regular';
   font-size: ${p => p.theme.fontSizes.m}px;
   line-height: 1;
@@ -51,6 +51,7 @@ export const ButtonOptions = styled.button`
   align-items: center;
   justify-content: space-between;
   width: inherit;
+  margin-top: ${p => p.theme.space[3]}px;
   padding: 15px 12px;
   font-family: 'Poppins-Regular';
   font-size: ${p => p.theme.fontSizes.m}px;

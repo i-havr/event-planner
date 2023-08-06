@@ -18,6 +18,10 @@ export const BackButton = styled.button`
   transition: color 300ms ease-out;
   cursor: pointer;
 
+  @media screen and (min-width: 1440px) {
+    margin-bottom: 17px;
+  }
+
   &:hover {
     color: ${p => p.theme.colors.accent};
   }

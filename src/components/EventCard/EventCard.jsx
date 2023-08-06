@@ -1,13 +1,18 @@
 import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
-import { formatDate, formatTime, capitalizeFirstLetter } from '../../helpers';
+import {
+  formatDate,
+  convertTimeTo24HourFormat,
+  capitalizeFirstLetter,
+  colorizePriorityMarker,
+} from '../../helpers';
 import { Button } from '../Button';
 
 import * as SC from './EventCard.styled';
 
-export const EventCard = ({ event, onFollowButton, isFollowed }) => {
+export const EventCard = ({ event }) => {
   if (event) {
-    // const { id, user: name, avatar, tweets, followers } = event;
     const {
       id,
       title,
@@ -30,7 +35,7 @@ export const EventCard = ({ event, onFollowButton, isFollowed }) => {
             <div>
               <SC.Date>{formatDate(date)}</SC.Date>
               {' at '}
-              <SC.Time>{formatTime(time)}</SC.Time>
+              <SC.Time>{convertTimeTo24HourFormat(time)}</SC.Time>
             </div>
 
             <SC.Location>{capitalizeFirstLetter(location)}</SC.Location>
@@ -40,11 +45,19 @@ export const EventCard = ({ event, onFollowButton, isFollowed }) => {
             <SC.Description>{description}</SC.Description>
             <SC.ButtonWrapper>
               <Link to={`/event/${id}`}>
-                <Button type="button">More info</Button>
+                <Button>More info</Button>
               </Link>
             </SC.ButtonWrapper>
           </SC.DescriptionWrapper>
         </SC.InfoWrapper>
+        <SC.CategoriesWrapper>
+          <SC.CategoryMarker>{category}</SC.CategoryMarker>
+          <SC.CategoryMarker
+            style={{ color: colorizePriorityMarker(priority) }}
+          >
+            {priority}
+          </SC.CategoryMarker>
+        </SC.CategoriesWrapper>
       </SC.EventCard>
     );
   }
@@ -62,6 +75,4 @@ EventCard.propTypes = {
     downloadURL: PropTypes.string.isRequired,
     priority: PropTypes.string.isRequired,
   }),
-  onFollowButton: PropTypes.func,
-  isFollowed: PropTypes.func,
 };

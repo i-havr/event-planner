@@ -9,22 +9,6 @@ export const Home = styled.main`
   background-repeat: no-repeat;
 `;
 
-export const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  max-width: 1600px;
-  min-height: 100vh;
-  padding: 40px 24px 42px 24px;
-
-  @media screen and (min-width: 768px) {
-    padding: 40px 40px 125px 40px;
-  }
-
-  @media screen and (min-width: 1440px) {
-    padding: 60px 80px 77px 80px;
-  }
-`;
-
 export const OptionsWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -34,6 +18,11 @@ export const OptionsWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
+    padding: 0 40px 0 47px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    padding: 0;
   }
 `;
 
@@ -44,6 +33,7 @@ export const Title = styled.h2`
   color: ${p => p.theme.colors.black};
 
   @media screen and (min-width: 1280px) {
+    display: inline-block;
     min-width: fit-content;
     margin-bottom: ${p => p.theme.space[0]}px;
   }
