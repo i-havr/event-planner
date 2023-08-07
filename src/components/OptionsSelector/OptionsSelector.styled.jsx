@@ -1,17 +1,30 @@
 import styled from 'styled-components';
 
+import { AiOutlineArrowUp, AiOutlineArrowDown } from 'react-icons/ai';
+import { ReactComponent as FilterIcon } from '../../assets/icons/filter-icon.svg';
+import { ReactComponent as SortIcon } from '../../assets/icons/sort-icon.svg';
+
+//WRAPPER CONTAINER
+
 export const OptionsSelector = styled.div`
   position: relative;
   width: 100%;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   font-family: 'Poppins-Medium';
 `;
 
-export const LanguageSelector = styled.div`
-  position: relative;
-  width: 69px;
-  font-family: 'Poppins-Medium';
+//TITLE
+
+export const Title = styled.span`
+  display: block;
+  font-family: 'Poppins-Regular';
+  font-size: ${p => p.theme.fontSizes.m}px;
+  line-height: 1;
+  letter-spacing: 0.4px;
+  color: ${p => p.theme.colors.secondary};
 `;
+
+//BUTTON
 
 export const ButtonLanguages = styled.button`
   display: flex;
@@ -35,15 +48,6 @@ export const ButtonLanguages = styled.button`
   & > svg {
     transition: transform ease-out 300ms;
   }
-`;
-
-export const Title = styled.span`
-  display: block;
-  font-family: 'Poppins-Regular';
-  font-size: ${p => p.theme.fontSizes.m}px;
-  line-height: 1;
-  letter-spacing: 0.4px;
-  color: ${p => p.theme.colors.secondary};
 `;
 
 export const ButtonOptions = styled.button`
@@ -76,6 +80,40 @@ export const ButtonOptions = styled.button`
   }
 `;
 
+export const ButtonSort = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 15px 16px;
+  font-family: 'Poppins-Medium';
+  font-size: ${p => p.theme.fontSizes.m}px;
+  line-height: ${p => p.theme.lineHeights.secondary};
+  /* color: ${p => p.theme.colors.text}; */
+  border: ${p => p.theme.borders.none};
+  border-radius: ${p => p.theme.radii.button};
+  background-color: ${p => p.theme.colors.white};
+  box-shadow: ${p => p.theme.shadows.normal};
+  outline: none;
+
+  border-bottom: ${props => props.open && '1px solid #ACA7C3'};
+
+  @media screen and (min-width: 768px) {
+    justify-content: space-between;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  & > svg {
+    transition: transform ease-out 300ms;
+  }
+`;
+
+//LIST
+
 export const LanguagesMenu = styled.ul`
   position: absolute;
   top: 50px;
@@ -97,6 +135,18 @@ export const Menu = styled.ul`
   box-shadow: ${p => p.theme.shadows.normal};
   z-index: 10;
 `;
+
+export const SortMenu = styled.ul`
+  position: absolute;
+  width: 150px;
+  padding: 0 16px;
+  background-color: ${p => p.theme.colors.white};
+  border-radius: ${p => p.theme.radii.button};
+  box-shadow: ${p => p.theme.shadows.normal};
+  z-index: 10;
+`;
+
+//LIST ITEM
 
 export const Language = styled.li`
   padding: 2px 0;
@@ -130,4 +180,56 @@ export const Option = styled.li`
     color: ${p => p.theme.colors.secondary};
     cursor: pointer;
   }
+`;
+
+export const SortOption = styled.li`
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 16px;
+  font-family: 'Poppins-Regular';
+  font-size: ${p => p.theme.fontSizes.s}px;
+  line-height: 1;
+  color: ${p => p.theme.colors.muted};
+
+  &:not(:last-child) {
+    border-bottom: ${p => p.theme.borders.normal} ${p => p.theme.colors.muted};
+  }
+
+  &:hover {
+    color: ${p => p.theme.colors.secondary};
+    border-bottom-color: ${p => p.theme.colors.secondary};
+    cursor: pointer;
+  }
+`;
+
+export const StyledFilterIcon = styled(FilterIcon)`
+  pointer-events: none;
+  & > path {
+    stroke: ${props => (props.selectedoption ? '#7B61FF' : '#3F3F3F')};
+  }
+`;
+
+export const StyledSortIcon = styled(SortIcon)`
+  pointer-events: none;
+  & > path {
+    stroke: ${props => (props.selectedoption ? '#7B61FF' : '#3F3F3F')};
+  }
+`;
+
+export const StyledArrowUp = styled(AiOutlineArrowUp)`
+  /* color: ${props => (props.selectedoption ? '#7B61FF' : '#3F3F3F')}; */
+
+  position: absolute;
+  top: 36%;
+  right: 16px;
+  color: ${p => p.theme.colors.secondary};
+`;
+
+export const StyledArrowDown = styled(AiOutlineArrowDown)`
+  /* color: ${props => (props.selectedoption ? '#7B61FF' : '#3F3F3F')}; */
+
+  position: absolute;
+  top: 36%;
+  right: 16px;
+  color: ${p => p.theme.colors.secondary};
 `;

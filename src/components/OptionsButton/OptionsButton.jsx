@@ -1,13 +1,18 @@
 import PropTypes from 'prop-types';
 import * as SC from './OptionsButton.styled';
 
-export const OptionsButton = ({ children, view, ...allyProps }) =>
+export const OptionsButton = ({
+  children,
+  actionHandler,
+  view,
+  ...allyProps
+}) =>
   view === 'option' ? (
-    <SC.OptionButton type="button" {...allyProps}>
+    <SC.OptionButton type="button" onClick={actionHandler} {...allyProps}>
       {children}
     </SC.OptionButton>
   ) : (
-    <SC.AddButton type="button" {...allyProps}>
+    <SC.AddButton type="button" onClick={actionHandler} {...allyProps}>
       {children}
     </SC.AddButton>
   );
@@ -18,8 +23,8 @@ OptionsButton.defaultProps = {
 };
 
 OptionsButton.propTypes = {
-  view: PropTypes.string,
-  onClick: PropTypes.func,
   children: PropTypes.node,
+  actionHandler: PropTypes.func,
+  view: PropTypes.string,
   'aria-label': PropTypes.string.isRequired,
 };

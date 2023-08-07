@@ -6,22 +6,15 @@ import { EventsList } from '../../components/EventsList';
 import * as SC from './HomePage.styled';
 
 export default function HomePage() {
-  const { isScreenMobile, isScreenTablet, isScreenDesktop } = useWindowWidth();
+  const { isScreenMobile } = useWindowWidth();
 
   return (
     <SC.Home>
       <Section>
         <Container>
-          {isScreenMobile && <OptionsPanel />}
-
-          {isScreenTablet && (
-            <SC.OptionsWrapper>
-              <OptionsPanel />
-              <SC.Title>My events</SC.Title>
-            </SC.OptionsWrapper>
-          )}
-
-          {isScreenDesktop && (
+          {isScreenMobile ? (
+            <OptionsPanel />
+          ) : (
             <SC.OptionsWrapper>
               <OptionsPanel />
               <SC.Title>My events</SC.Title>

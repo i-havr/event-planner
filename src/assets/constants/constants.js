@@ -21,11 +21,11 @@ export const categoryTypes = {
 export const sortMethods = {
   name: 'sortMethods',
   list: [
-    'byNameUp',
-    'byNameDown',
-    'byDateUp',
-    'byDateDown',
-    'byPriorityUp',
-    'byPriorityDown',
+    'by name',
+    'by name',
+    'by date',
+    'by date',
+    'by priority',
+    'by priority',
   ],
 };
