@@ -1,18 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = '';
+const initialState = {
+  searchFilter: '',
+  categoryFilter: '',
+  sortEventsOption: '',
+};
 
 export const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    eventsFilter(state, { payload }) {
-      state = payload;
-      return state;
+    searchFilter(state, { payload }) {
+      return { ...state, searchFilter: payload };
+    },
+
+    categoryFilter(state, { payload }) {
+      return { ...state, categoryFilter: payload };
+    },
+
+    sortEventsOption(state, { payload }) {
+      return { ...state, sortEventsOption: payload };
     },
   },
 });
 
-export const { eventsFilter } = filterSlice.actions;
+export const { searchFilter, categoryFilter, sortEventsOption } =
+  filterSlice.actions;
 
 export default filterSlice.reducer;

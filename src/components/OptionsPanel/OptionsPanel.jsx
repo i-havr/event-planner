@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
-
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {
+  categoryFilter,
+  sortEventsOption,
+} from '../../redux/filter/filter-slice';
+
 import { useWindowWidth } from '../../hooks';
 import { OptionsButton } from '../OptionsButton';
 import { OptionsSelector } from '../OptionsSelector';
@@ -12,10 +17,17 @@ export const OptionsPanel = () => {
   const [selectedSort, setSelectedSort] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const { isScreenMobile } = useWindowWidth();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(selectedCategory);
-  }, [selectedCategory, selectedSort]);
+    if (selectedSort) {
+      dispatch(sortEventsOption(selectedSort));
+    }
+
+    if (selectedCategory) {
+      dispatch(categoryFilter(selectedCategory));
+    }
+  }, [dispatch, selectedCategory, selectedSort]);
 
   return (
     <SC.Wrapper>

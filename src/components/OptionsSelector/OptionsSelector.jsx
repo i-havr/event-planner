@@ -38,7 +38,7 @@ export const OptionsSelector = ({
 
     selectorView !== 'languages' &&
       selectorView !== 'sortMethods' &&
-      setOption(option);
+      setOption(option.slice(0, -1));
 
     setIsOpen(false);
     setIsFirstEdit(false);

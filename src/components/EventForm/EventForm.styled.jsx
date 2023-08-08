@@ -132,7 +132,7 @@ export const LabelFile = styled.label`
 
 export const InputFilePlaceholder = styled.span`
   position: absolute;
-  top: 40px;
+  top: 60px;
   left: 12px;
   font-family: 'Poppins-Regular';
   font-size: ${p => p.theme.fontSizes.m}px;

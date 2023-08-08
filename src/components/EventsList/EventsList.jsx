@@ -1,22 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { selectEvents } from '../../redux/events/events-selectors';
-import { selectFilter } from '../../redux/filter/filter-selectors';
+import {
+  selectSearchFilter,
+  selectCategoryFilter,
+  selectSortEventsOption,
+} from '../../redux/filter/filter-selectors';
+import { fetchEvents } from '../../redux/events/events-slice';
 
 import { db } from '../../firebase/config';
 import { collection, onSnapshot } from 'firebase/firestore';
-
+import { sortByOption } from '../../helpers';
 import { EventCard } from '../EventCard';
-
-import { fetchEvents } from '../../redux/events/events-slice';
-
 import * as SC from './EventsList.styled';
 
 export const EventsList = () => {
+  const [visibleEvents, setVisibleEvents] = useState([]);
   const events = useSelector(selectEvents);
-  const filter = useSelector(selectFilter);
+  const searchFilter = useSelector(selectSearchFilter);
+  const categoryFilter = useSelector(selectCategoryFilter);
+  const sortEventsOption = useSelector(selectSortEventsOption);
+
   const dispatch = useDispatch();
+
+  useEffect(() => {}, [visibleEvents]);
 
   useEffect(() => {
     const getEvents = async () => {
@@ -29,7 +37,6 @@ export const EventsList = () => {
             const sortedData = data.docs
               .map(doc => ({ id: doc.id, ...doc.data() }))
               .sort((a, b) => b.createdAt - a.createdAt);
-            // console.log(sortedData);
             dispatch(fetchEvents(sortedData));
           },
           () => {}
@@ -42,30 +49,49 @@ export const EventsList = () => {
     getEvents();
   }, [dispatch]);
 
-  const getVisibleEvents = () => {
-    const normalizedFilter = filter.toLowerCase();
+  useEffect(() => {
+    if (events) {
+      const getVisibleEvents = () => {
+        const normalizedFilter = searchFilter.toLowerCase();
 
-    return events.filter(
-      ({ title, description }) =>
-        title.toLowerCase().includes(normalizedFilter) ||
-        description.toLowerCase().includes(normalizedFilter)
-    );
-  };
+        const filteredBySearchEvents = events.filter(
+          ({ title, description }) =>
+            title.toLowerCase().includes(normalizedFilter) ||
+            description.toLowerCase().includes(normalizedFilter)
+        );
 
-  const visibleEvents = getVisibleEvents();
+        if (categoryFilter) {
+          const filteredByCategoryEvents = filteredBySearchEvents.filter(
+            ({ category }) => category === categoryFilter.slice(0, -2)
+          );
+          // setVisibleEvents(
+          //   filteredByCategoryEvents.sort((a, b) =>
+          //     a.title > b.title ? 1 : -1
+          //   )
+          // );
+          setVisibleEvents(
+            sortByOption(filteredByCategoryEvents, sortEventsOption)
+          );
+        } else {
+          setVisibleEvents(
+            sortByOption(filteredBySearchEvents, sortEventsOption)
+          );
+        }
+      };
+
+      getVisibleEvents();
+    }
+  }, [categoryFilter, events, searchFilter, sortEventsOption]);
+
+  // const ab = [{ title: 'f' }, { title: 'a' }, { title: 'z' }];
+  // const zz = ab.sort((a, b) => (a.title > b.title ? 1 : -1));
+  // console.log(zz);
 
   if (visibleEvents.length > 0) {
     return (
       <SC.EventsList>
         {visibleEvents.map(event => {
-          return (
-            <EventCard
-              key={event.id}
-              event={event}
-              // onEditButton={id => dispatch(setModal(id))}
-              // onDeleteButton={id => dispatch(deleteContact(id))}
-            />
-          );
+          return <EventCard key={event.id} event={event} />;
         })}
       </SC.EventsList>
     );

@@ -297,7 +297,9 @@ export const EventForm = ({ editType }) => {
           />
 
           <SC.InputFileWrapper>
-            <SC.LabelTitle>Add picture</SC.LabelTitle>
+            <SC.LabelTitle style={{ marginTop: '20px' }}>
+              Add picture
+            </SC.LabelTitle>
             <SC.LabelFile>
               <SC.Input
                 type="file"
@@ -463,7 +465,9 @@ export const EventForm = ({ editType }) => {
           />
 
           <SC.InputFileWrapper>
-            <SC.LabelTitle>Add picture</SC.LabelTitle>
+            <SC.LabelTitle style={{ marginTop: '20px' }}>
+              Add picture
+            </SC.LabelTitle>
             <SC.LabelFile>
               <SC.Input
                 type="file"

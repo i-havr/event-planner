@@ -9,7 +9,6 @@ import { ReactComponent as SortIcon } from '../../assets/icons/sort-icon.svg';
 export const OptionsSelector = styled.div`
   position: relative;
   width: 100%;
-  /* margin-bottom: 20px; */
   font-family: 'Poppins-Medium';
 `;
 
@@ -210,26 +209,24 @@ export const StyledFilterIcon = styled(FilterIcon)`
 `;
 
 export const StyledSortIcon = styled(SortIcon)`
-  pointer-events: none;
   & > path {
     stroke: ${props => (props.selectedoption ? '#7B61FF' : '#3F3F3F')};
   }
+  pointer-events: none;
 `;
 
 export const StyledArrowUp = styled(AiOutlineArrowUp)`
-  /* color: ${props => (props.selectedoption ? '#7B61FF' : '#3F3F3F')}; */
-
   position: absolute;
   top: 36%;
   right: 16px;
   color: ${p => p.theme.colors.secondary};
+  pointer-events: none;
 `;
 
 export const StyledArrowDown = styled(AiOutlineArrowDown)`
-  /* color: ${props => (props.selectedoption ? '#7B61FF' : '#3F3F3F')}; */
-
   position: absolute;
   top: 36%;
   right: 16px;
   color: ${p => p.theme.colors.secondary};
+  pointer-events: none;
 `;

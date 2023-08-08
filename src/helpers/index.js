@@ -5,3 +5,4 @@ export * from './formatTime';
 export * from './capitalizeFirstLetter';
 export * from './colorizePriorityMarker';
 export * from './createTimestampFromString';
+export * from './sortByOption';
