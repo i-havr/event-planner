@@ -1,6 +1,8 @@
-import{s as i,m as s,r as a,j as t,L as r,H as c}from"./index-3d582e23.js";import{S as m,C as d}from"./Button-c7847cf1.js";import{B as l}from"./eventsService-85afced0.js";import{E as p}from"./EventForm-817246de.js";const h=i.main`
+import{s as i,m as s,r as a,j as t,L as r,H as c}from"./index-2e27825a.js";import{S as m,C as d}from"./Button-50ffef74.js";import{B as l}from"./eventsService-d0b52452.js";import{E as h}from"./EventForm-361f55bb.js";const p=i.main`
   display: block;
+  height: 100vh;
   min-height: 100vh;
+
   background-image: url('/src/assets/images/bg-waves.png');
   background-position: center;
   background-size: cover;
@@ -29,4 +31,4 @@ import{s as i,m as s,r as a,j as t,L as r,H as c}from"./index-3d582e23.js";impor
     min-width: fit-content;
     margin-bottom: 25px;
   }
-`;function j(){var n;const e=s(),o=((n=e.state)==null?void 0:n.from)??"/";return a.useLayoutEffect(()=>{window.scrollTo(0,0)},[e.pathname]),t.jsx(h,{children:t.jsx(m,{children:t.jsxs(d,{children:[t.jsx(r,{to:o,children:t.jsxs(l,{"aria-label":"Back button",children:[t.jsx(c,{size:16}),"Back"]})}),t.jsx(x,{children:"Edit event"}),t.jsx(p,{editType:!0})]})})})}export{j as default};
+`;function j(){var n;const e=s(),o=((n=e.state)==null?void 0:n.from)??"/";return a.useLayoutEffect(()=>{window.scrollTo(0,0)},[e.pathname]),t.jsx(p,{children:t.jsx(m,{children:t.jsxs(d,{children:[t.jsx(r,{to:o,children:t.jsxs(l,{"aria-label":"Back button",children:[t.jsx(c,{size:16}),"Back"]})}),t.jsx(x,{children:"Edit event"}),t.jsx(h,{editType:!0})]})})})}export{j as default};

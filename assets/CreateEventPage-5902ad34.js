@@ -1,6 +1,8 @@
-import{s as n,j as t,L as i,H as s}from"./index-3d582e23.js";import{S as o,C as r}from"./Button-c7847cf1.js";import{B as a}from"./eventsService-85afced0.js";import{E as c}from"./EventForm-817246de.js";const m=n.main`
+import{s as n,j as t,L as i,H as s}from"./index-2e27825a.js";import{S as o,C as r}from"./Button-50ffef74.js";import{B as a}from"./eventsService-d0b52452.js";import{E as c}from"./EventForm-361f55bb.js";const m=n.main`
   display: block;
+  height: 100vh;
   min-height: 100vh;
+
   background-image: url('/src/assets/images/bg-waves.png');
   background-position: center;
   background-size: cover;
