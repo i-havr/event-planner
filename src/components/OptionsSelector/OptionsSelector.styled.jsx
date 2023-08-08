@@ -89,7 +89,6 @@ export const ButtonSort = styled.button`
   font-family: 'Poppins-Medium';
   font-size: ${p => p.theme.fontSizes.m}px;
   line-height: ${p => p.theme.lineHeights.secondary};
-  /* color: ${p => p.theme.colors.text}; */
   border: ${p => p.theme.borders.none};
   border-radius: ${p => p.theme.radii.button};
   background-color: ${p => p.theme.colors.white};
@@ -97,6 +96,7 @@ export const ButtonSort = styled.button`
   outline: none;
 
   border-bottom: ${props => props.open && '1px solid #ACA7C3'};
+  padding: ${props => props.open && '15px 16px 14px 16px;'};
 
   @media screen and (min-width: 768px) {
     justify-content: space-between;

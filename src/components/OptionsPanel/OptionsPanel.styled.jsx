@@ -8,6 +8,14 @@ export const Wrapper = styled.div`
   width: 100%;
   padding: 0 0 40px 0;
 
+  @media screen and (min-width: 768px) {
+    padding: 0 0 24px 0;
+  }
+
+  @media screen and (min-width: 1280px) {
+    padding: 0;
+  }
+
   & > div:nth-child(1) {
     width: 56px;
 
@@ -43,13 +51,5 @@ export const Wrapper = styled.div`
     @media screen and (min-width: 768px) {
       width: 150px;
     }
-  }
-
-  @media screen and (min-width: 768px) {
-    padding: 0 0 24px 0;
-  }
-
-  @media screen and (min-width: 1280px) {
-    padding: 0;
   }
 `;
