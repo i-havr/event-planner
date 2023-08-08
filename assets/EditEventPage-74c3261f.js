@@ -1,11 +1,11 @@
-import{s as n,j as t,L as i,H as s}from"./index-9cf2a618.js";import{S as o,C as r}from"./Button-64c261b6.js";import{B as a}from"./eventsService-078e2c32.js";import{E as c}from"./EventForm-41e033b4.js";const m=n.main`
+import{s as i,m as s,r as a,j as t,L as r,H as c}from"./index-3d582e23.js";import{S as m,C as d}from"./Button-c7847cf1.js";import{B as l}from"./eventsService-85afced0.js";import{E as p}from"./EventForm-817246de.js";const h=i.main`
   display: block;
   min-height: 100vh;
   background-image: url('/src/assets/images/bg-waves.png');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-`;n.div`
+`;i.div`
   display: flex;
   flex-direction: column;
 
@@ -14,7 +14,7 @@ import{s as n,j as t,L as i,H as s}from"./index-9cf2a618.js";import{S as o,C as 
     justify-content: space-between;
     align-items: center;
   }
-`;const d=n.h2`
+`;const x=i.h2`
   margin-bottom: ${e=>e.theme.space[5]}px;
   font-family: 'Poppins-SemiBold';
   font-size: ${e=>e.theme.fontSizes.l}px;
@@ -29,4 +29,4 @@ import{s as n,j as t,L as i,H as s}from"./index-9cf2a618.js";import{S as o,C as 
     min-width: fit-content;
     margin-bottom: 25px;
   }
-`;function f(){return t.jsx(m,{children:t.jsx(o,{children:t.jsxs(r,{children:[t.jsx(i,{to:"/",children:t.jsxs(a,{"aria-label":"Back button",children:[t.jsx(s,{size:16}),"Back"]})}),t.jsx(d,{children:"Create new event"}),t.jsx(c,{})]})})})}export{f as default};
+`;function j(){var n;const e=s(),o=((n=e.state)==null?void 0:n.from)??"/";return a.useLayoutEffect(()=>{window.scrollTo(0,0)},[e.pathname]),t.jsx(h,{children:t.jsx(m,{children:t.jsxs(d,{children:[t.jsx(r,{to:o,children:t.jsxs(l,{"aria-label":"Back button",children:[t.jsx(c,{size:16}),"Back"]})}),t.jsx(x,{children:"Edit event"}),t.jsx(p,{editType:!0})]})})})}export{j as default};
