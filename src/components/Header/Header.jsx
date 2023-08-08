@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-// import { OptionsSelector } from '../OptionsSelector';
 import { OptionsSelector } from '../OptionsSelector';
 import { SearchInput } from '../SearchInput';
 import { useWindowWidth } from '../../hooks';

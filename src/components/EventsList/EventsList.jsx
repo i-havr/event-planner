@@ -64,11 +64,7 @@ export const EventsList = () => {
           const filteredByCategoryEvents = filteredBySearchEvents.filter(
             ({ category }) => category === categoryFilter.slice(0, -2)
           );
-          // setVisibleEvents(
-          //   filteredByCategoryEvents.sort((a, b) =>
-          //     a.title > b.title ? 1 : -1
-          //   )
-          // );
+
           setVisibleEvents(
             sortByOption(filteredByCategoryEvents, sortEventsOption)
           );
@@ -82,10 +78,6 @@ export const EventsList = () => {
       getVisibleEvents();
     }
   }, [categoryFilter, events, searchFilter, sortEventsOption]);
-
-  // const ab = [{ title: 'f' }, { title: 'a' }, { title: 'z' }];
-  // const zz = ab.sort((a, b) => (a.title > b.title ? 1 : -1));
-  // console.log(zz);
 
   if (visibleEvents.length > 0) {
     return (

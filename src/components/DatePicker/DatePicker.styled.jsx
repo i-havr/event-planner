@@ -20,8 +20,7 @@ export const DatePickerWrapper = styled.div`
     padding: 20px;
     border-radius: 11px;
     background-color: ${p => p.theme.colors.background};
-    /* background-color: black; */
-    border: ${p => p.theme.borders.none};
+     border: ${p => p.theme.borders.none};
     box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.07);
 
     @media screen and (min-width: 768px) {
@@ -127,9 +126,7 @@ export const DatePickerWrapper = styled.div`
     margin: 0;
     margin-left: auto;
     margin-right: auto;
-    /* background-color: black; */
-    /* padding: 8px 0 8px 12px; */
-    font-family: 'Inter-Regular';
+     font-family: 'Inter-Regular';
     font-size: ${p => p.theme.fontSizes.s}px;
     line-height: 1.33;
     color: rgba(60, 60, 60, 0.5);

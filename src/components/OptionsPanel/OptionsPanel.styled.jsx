@@ -6,7 +6,6 @@ export const Wrapper = styled.div`
   gap: ${p => p.theme.space[5]}px;
 
   width: 100%;
-  /* height: fit-content; */
   padding: 0 0 40px 0;
 
   & > div:nth-child(1) {
@@ -21,7 +20,6 @@ export const Wrapper = styled.div`
       stroke: ${p => p.theme.colors.secondary};
     }
     & > button > svg > path {
-      /* stroke: ${props => (props.selectedOption ? '#7B61FF' : '#3F3F3F')}; */
       stroke: '#7B61FF';
     }
 
