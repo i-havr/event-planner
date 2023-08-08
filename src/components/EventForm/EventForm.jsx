@@ -5,6 +5,8 @@ import { Navigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectEvents } from '../../redux/events/events-selectors';
 
+import { useInput } from '../../hooks';
+
 import { useWindowWidth } from '../../hooks';
 import { uploadEventToServer, editEvent } from '../../services';
 import { dateConverter, createTimestampFromString } from '../../helpers';
@@ -18,19 +20,24 @@ import { ReactComponent as CrossIcon } from '../../assets/icons/cross-icon.svg';
 import * as SC from './EventForm.styled';
 
 export const EventForm = ({ editType }) => {
+  const [isFirstEdit, setIsFirstEdit] = useState(true);
+  const [isFormDataValid, setIsFormDataValid] = useState(false);
+
   const { eventId: id } = useParams();
   const events = useSelector(selectEvents);
   const event = events.find(event => event.id === id);
 
-  const [title, setTitle] = useState(editType ? event.title : '');
-  const [description, setDescription] = useState(
-    editType ? event.description : ''
-  );
+  const title = useInput(editType ? event.title : '', { isTitle: true });
+  const description = useInput(editType ? event.description : '', {
+    isDescription: true,
+  });
   const [date, setDate] = useState(
     editType ? createTimestampFromString(event.date) : ''
   );
-  const [time, setTime] = useState('');
-  const [location, setLocation] = useState(editType ? event.location : '');
+  const [time, setTime] = useState(editType ? event.time : '');
+  const location = useInput(editType ? event.location : '', {
+    isLocation: true,
+  });
   const [category, setCategory] = useState(editType ? event.category : '');
   const [pictureUri, setPictureUri] = useState(
     editType ? event.downloadURL : ''
@@ -39,7 +46,6 @@ export const EventForm = ({ editType }) => {
 
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
   const [isTimePickerOpen, setTimePickerOpen] = useState(false);
-  const [isFirstEdit, setIsFirstEdit] = useState(true);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const { isLargeScreenDesktop } = useWindowWidth();
@@ -49,14 +55,44 @@ export const EventForm = ({ editType }) => {
   const timePickerRef = useRef(null);
 
   useEffect(() => {
+    const isFormValid =
+      title.validForm && description.validForm && location.validForm;
+
+    const areFieldsFilled =
+      title.value &&
+      description.value &&
+      date &&
+      time &&
+      location.value &&
+      category &&
+      pictureUri &&
+      priority;
+
+    if (areFieldsFilled && isFormValid) {
+      setIsFormDataValid(true);
+    } else {
+      setIsFormDataValid(false);
+    }
+  }, [
+    category,
+    date,
+    description,
+    location,
+    pictureUri,
+    priority,
+    time,
+    title,
+  ]);
+
+  useEffect(() => {
     if (isFirstEdit) {
-      setTime('');
+      editType ? setTime(event.time) : setTime('');
     }
 
     if (datePickerRef.current) {
       datePickerRef.current.setOpen(isDatePickerOpen);
     }
-  }, [isDatePickerOpen, isFirstEdit, isTimePickerOpen]);
+  }, [editType, event?.time, isDatePickerOpen, isFirstEdit]);
 
   const handleBackdropClick = event => {
     if (
@@ -88,57 +124,41 @@ export const EventForm = ({ editType }) => {
     }
   };
 
-  const handleInputChange = event => {
-    const { name, value } = event.currentTarget;
-    switch (name) {
-      case 'title':
-        setTitle(value);
-        break;
-
-      case 'description':
-        setDescription(value);
-        break;
-
-      case 'location':
-        setLocation(value);
-        break;
-
-      default:
-        return;
-    }
-  };
-
   const handleSubmit = async event => {
     event.preventDefault();
 
     if (editType) {
       const updatedDate = dateConverter(date);
 
-      const isSuccess = await editEvent(id, {
-        title,
-        description,
-        date: updatedDate,
-        time,
-        location,
-        category,
-        pictureUri,
-        priority,
-      });
+      if (isFormDataValid) {
+        const isSuccess = await editEvent(id, {
+          title: title.value,
+          description: description.value,
+          date: updatedDate,
+          time,
+          location: location.value,
+          category,
+          downloadURL: pictureUri,
+          priority,
+        });
 
-      isSuccess && setIsFormSubmitted(true);
+        isSuccess && setIsFormSubmitted(true);
+      }
     } else {
-      const isSuccess = await uploadEventToServer(
-        title,
-        description,
-        dateConverter(date),
-        time,
-        location,
-        category,
-        pictureUri,
-        priority
-      );
+      if (isFormDataValid) {
+        const isSuccess = await uploadEventToServer(
+          title.value,
+          description.value,
+          dateConverter(date),
+          time,
+          location.value,
+          category,
+          pictureUri,
+          priority
+        );
 
-      isSuccess && setIsFormSubmitted(true);
+        isSuccess && setIsFormSubmitted(true);
+      }
     }
   };
 
@@ -168,39 +188,80 @@ export const EventForm = ({ editType }) => {
     <SC.Form autoComplete="off">
       <SC.GroupsWrapper>
         <SC.TitleGroupWrapper>
-          <SC.Label>
+          <SC.Label $dirtyfield={title.isDirty && title.titleError.toString()}>
             <SC.LabelTitle>Title</SC.LabelTitle>
             <SC.Input
               type="text"
               name="title"
-              value={title}
-              onChange={handleInputChange}
+              value={title.value}
+              style={{
+                border:
+                  title.value &&
+                  title.isDirty &&
+                  title.titleError &&
+                  '1px solid #FF2B77',
+              }}
+              onChange={title.onChange}
+              onBlur={title.onBlur}
               placeholder="Input"
             />
-            {title && (
+            {title.value && (
               <CrossIcon
                 style={{ right: '12px', top: '40px', cursor: 'pointer' }}
-                onClick={() => setTitle('')}
+                onClick={() => title.setValue('')}
               />
             )}
+
+            <SC.ErrorMessage
+              style={{
+                display:
+                  title.value && title.isDirty && title.titleError && 'block',
+              }}
+            >
+              Invalid input
+            </SC.ErrorMessage>
           </SC.Label>
 
-          <SC.Label>
+          <SC.Label
+            $dirtyfield={
+              description.isDirty && description.descriptionError.toString()
+            }
+          >
             <SC.LabelTitle>Description</SC.LabelTitle>
             <SC.Textarea
               type="text"
               name="description"
               maxLength={100}
-              value={description}
-              onChange={handleInputChange}
+              value={description.value}
+              style={{
+                border:
+                  description.value &&
+                  description.isDirty &&
+                  description.descriptionError &&
+                  '1px solid #FF2B77',
+              }}
+              onChange={description.onChange}
+              onBlur={description.onBlur}
               placeholder="Input"
             />
-            {description && (
+            {description.value && (
               <CrossIcon
                 style={{ right: '12px', top: '40px', cursor: 'pointer' }}
-                onClick={() => setDescription('')}
+                onClick={() => description.setValue('')}
               />
             )}
+
+            <SC.ErrorMessage
+              style={{
+                display:
+                  description.value &&
+                  description.isDirty &&
+                  description.descriptionError &&
+                  'block',
+              }}
+            >
+              Invalid input
+            </SC.ErrorMessage>
           </SC.Label>
 
           <SC.LabelDateTime>
@@ -248,7 +309,6 @@ export const EventForm = ({ editType }) => {
               type="text"
               name="time"
               value={editType && isFirstEdit ? event.time : time}
-              onChange={handleInputChange}
               placeholder={isTimePickerOpen ? 'Select Time' : 'Input'}
               readOnly
             />
@@ -271,21 +331,43 @@ export const EventForm = ({ editType }) => {
         </SC.TitleGroupWrapper>
 
         <SC.LocationGroupWrapper>
-          <SC.Label>
+          <SC.Label
+            $dirtyfield={location.isDirty && location.locationError.toString()}
+          >
             <SC.LabelTitle>Location</SC.LabelTitle>
             <SC.Input
               type="text"
               name="location"
-              value={location}
-              onChange={handleInputChange}
+              value={location.value}
+              style={{
+                border:
+                  location.value &&
+                  location.isDirty &&
+                  location.locationError &&
+                  '1px solid #FF2B77',
+              }}
+              onChange={location.onChange}
+              onBlur={location.onBlur}
               placeholder="Input"
             />
-            {location && (
+            {location.value && (
               <CrossIcon
                 style={{ right: '12px', top: '40px', cursor: 'pointer' }}
-                onClick={() => setLocation('')}
+                onClick={() => location.setValue('')}
               />
             )}
+
+            <SC.ErrorMessage
+              style={{
+                display:
+                  location.value &&
+                  location.isDirty &&
+                  location.locationError &&
+                  'block',
+              }}
+            >
+              Invalid input
+            </SC.ErrorMessage>
           </SC.Label>
 
           <OptionsSelector
@@ -328,45 +410,87 @@ export const EventForm = ({ editType }) => {
         </SC.LocationGroupWrapper>
       </SC.GroupsWrapper>
 
-      <Button actionHandler={handleSubmit}>Add event</Button>
+      <Button disabled={!isFormDataValid} actionHandler={handleSubmit}>
+        {editType ? 'Save' : 'Add event'}
+      </Button>
     </SC.Form>
   ) : (
     <SC.Form autoComplete="off">
       <SC.GroupsWrapper>
         <SC.TitleGroupWrapper>
-          <SC.Label>
+          <SC.Label $dirtyfield={title.isDirty && title.titleError.toString()}>
             <SC.LabelTitle>Title</SC.LabelTitle>
             <SC.Input
               type="text"
               name="title"
-              value={title}
-              onChange={handleInputChange}
+              value={title.value}
+              style={{
+                border:
+                  title.value &&
+                  title.isDirty &&
+                  title.titleError &&
+                  '1px solid #FF2B77',
+              }}
+              onChange={title.onChange}
+              onBlur={title.onBlur}
               placeholder="Input"
             />
-            {title && (
+            {title.value && (
               <CrossIcon
                 style={{ right: '12px', top: '40px', cursor: 'pointer' }}
-                onClick={() => setTitle('')}
+                onClick={() => title.setValue('')}
               />
             )}
+            <SC.ErrorMessage
+              style={{
+                display:
+                  title.value && title.isDirty && title.titleError && 'block',
+              }}
+            >
+              Invalid input
+            </SC.ErrorMessage>
           </SC.Label>
 
-          <SC.Label>
+          <SC.Label
+            $dirtyfield={
+              description.isDirty && description.descriptionError.toString()
+            }
+          >
             <SC.LabelTitle>Description</SC.LabelTitle>
             <SC.Textarea
               type="text"
               name="description"
               maxLength={100}
-              value={description}
-              onChange={handleInputChange}
+              value={description.value}
+              style={{
+                border:
+                  description.value &&
+                  description.isDirty &&
+                  description.descriptionError &&
+                  '1px solid #FF2B77',
+              }}
+              onChange={description.onChange}
+              onBlur={description.onBlur}
               placeholder="Input"
             />
-            {description && (
+            {description.value && (
               <CrossIcon
                 style={{ right: '12px', top: '40px', cursor: 'pointer' }}
-                onClick={() => setDescription('')}
+                onClick={() => description.setValue('')}
               />
             )}
+
+            <SC.ErrorMessage
+              style={{
+                display:
+                  description.value &&
+                  description.isDirty &&
+                  description.descriptionError &&
+                  'block',
+              }}
+            >
+              Invalid input
+            </SC.ErrorMessage>
           </SC.Label>
         </SC.TitleGroupWrapper>
 
@@ -416,7 +540,6 @@ export const EventForm = ({ editType }) => {
               type="text"
               name="time"
               value={editType && isFirstEdit ? event.time : time}
-              onChange={handleInputChange}
               placeholder={isTimePickerOpen ? 'Select Time' : 'Input'}
               readOnly
             />
@@ -437,21 +560,51 @@ export const EventForm = ({ editType }) => {
             />
           </SC.LabelDateTime>
 
-          <SC.Label>
+          <SC.Label
+            $dirtyfield={location.isDirty && location.locationError.toString()}
+          >
             <SC.LabelTitle>Location</SC.LabelTitle>
             <SC.Input
               type="text"
               name="location"
-              value={location}
-              onChange={handleInputChange}
+              value={location.value}
+              style={{
+                border:
+                  location.value &&
+                  location.isDirty &&
+                  location.locationError &&
+                  '1px solid #FF2B77',
+              }}
+              onChange={location.onChange}
+              onBlur={location.onBlur}
               placeholder="Input"
             />
-            {location && (
+            {location.value && (
               <CrossIcon
-                style={{ right: '12px', top: '40px', cursor: 'pointer' }}
-                onClick={() => setLocation('')}
+                style={{
+                  right: '12px',
+                  top: '40px',
+                  cursor: 'pointer',
+                  color:
+                    location.isDirty &&
+                    location.locationError &&
+                    '1px solid #FF2B77',
+                }}
+                onClick={() => location.setValue('')}
               />
             )}
+
+            <SC.ErrorMessage
+              style={{
+                display:
+                  location.value &&
+                  location.isDirty &&
+                  location.locationError &&
+                  'block',
+              }}
+            >
+              Invalid input
+            </SC.ErrorMessage>
           </SC.Label>
         </SC.DateGroupWrapper>
 
@@ -496,7 +649,9 @@ export const EventForm = ({ editType }) => {
         </SC.CategoryGroupWrapper>
       </SC.GroupsWrapper>
 
-      <Button actionHandler={handleSubmit}>Add event</Button>
+      <Button disabled={!isFormDataValid} actionHandler={handleSubmit}>
+        {editType ? 'Save' : 'Add event'}
+      </Button>
     </SC.Form>
   );
 };

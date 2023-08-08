@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const CreateEventPage = styled.main`
   display: block;
+  height: 100vh;
   min-height: 100vh;
+
   background-image: url('/src/assets/images/bg-waves.png');
   background-position: center;
   background-size: cover;

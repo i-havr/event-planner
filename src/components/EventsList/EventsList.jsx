@@ -62,7 +62,7 @@ export const EventsList = () => {
 
         if (categoryFilter) {
           const filteredByCategoryEvents = filteredBySearchEvents.filter(
-            ({ category }) => category === categoryFilter.slice(0, -2)
+            ({ category }) => category === categoryFilter.slice(0, -1).trim()
           );
 
           setVisibleEvents(

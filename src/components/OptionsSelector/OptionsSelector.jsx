@@ -38,7 +38,8 @@ export const OptionsSelector = ({
 
     selectorView !== 'languages' &&
       selectorView !== 'sortMethods' &&
-      setOption(option.slice(0, -1));
+      setOption(option.trim());
+    // setOption(option.slice(0, -1).trim());
 
     setIsOpen(false);
     setIsFirstEdit(false);
@@ -123,10 +124,10 @@ export const OptionsSelector = ({
           {!isScreenMobile
             ? !isOpen
               ? selectedOption
-                ? selectedOption.slice(0, -1)
+                ? selectedOption.slice(0, -1).trim()
                 : `${title}`
               : selectedOption
-              ? selectedOption.slice(0, -1)
+              ? selectedOption.slice(0, -1).trim()
               : `${title}`
             : ''}
 

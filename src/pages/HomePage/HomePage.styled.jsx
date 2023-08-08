@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const Home = styled.main`
   display: block;
-  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+
   background-image: url('/src/assets/images/bg-waves.png');
   background-position: center;
   background-size: cover;

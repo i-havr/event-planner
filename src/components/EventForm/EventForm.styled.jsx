@@ -80,7 +80,22 @@ export const Label = styled.label`
 
   & > svg {
     position: absolute;
+    & > path {
+      stroke: ${props =>
+        props.$dirtyfield === 'true' ? '#FF2B77' : '#7B61FF'};
+    }
   }
+`;
+
+export const ErrorMessage = styled.span`
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  right: ${p => p.theme.space[4]}px;
+  font-family: 'Poppins-Regular';
+  font-size: ${p => p.theme.fontSizes.xs}px;
+  line-height: 1.33;
+  color: ${p => p.theme.colors.red};
 `;
 
 export const LabelDateTime = styled.label`
@@ -112,7 +127,7 @@ export const InputFileWrapper = styled.div`
   & > svg {
     position: absolute;
     width: 44px;
-    height: 44px;
+    height: 84px;
     right: 2px;
     top: 30px;
     padding: 10px;
