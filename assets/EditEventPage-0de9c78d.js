@@ -1,4 +1,4 @@
-import{s as i,m as s,r as a,j as t,L as r,H as c}from"./index-2e27825a.js";import{S as m,C as d}from"./Button-50ffef74.js";import{B as l}from"./eventsService-d0b52452.js";import{E as h}from"./EventForm-361f55bb.js";const p=i.main`
+import{s as i,m as s,r as a,j as t,L as r,H as c}from"./index-8f97d917.js";import{S as m,C as d}from"./Button-bc4273ec.js";import{B as l}from"./eventsService-5d08e531.js";import{E as h}from"./EventForm-5368ed8a.js";const p=i.main`
   display: block;
   height: 100vh;
   min-height: 100vh;

@@ -1,4 +1,4 @@
-import{s as Rs,j as Ps,P as ce}from"./index-2e27825a.js";const Oc=Rs.section`
+import{s as Rs,j as Ps,P as ce}from"./index-8f97d917.js";const Oc=Rs.section`
   width: 100%;
   min-height: 100%;
 `,Mc=({children:e})=>Ps.jsx(Oc,{children:e});Mc.propTypes={children:ce.node.isRequired};const Lc=Rs.div`
